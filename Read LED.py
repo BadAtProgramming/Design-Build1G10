@@ -6,9 +6,15 @@ import time
 p12=machine.Pin(12,machine.Pin.OUT)
 p12.value(1)
 
-#button (A4 slot is 36)
-button=machine.Pin(36,machine.Pin.OUT)
+#the recording starts when button is pressed (A4 slot is 36)
+start=machine.Pin(36,machine.Pin.IN)
 #if A4.value()==1 It's pressed down, 0 if not
+#indicator to show recording has started(not sure if this works)
+#write a code to save if the button has been pressed or not
+if :
+    green.value(0)
+    red.value(1)
+
 
 #power green and red light: red:data is receiving, green:okay to disconnect
 green=machine.Pin(32,machine.Pin.OUT)
@@ -34,9 +40,21 @@ led.duty(100)
 led.freq(70000)
 
 #define a function to receive data continuously and break when button is pressed
+#variable "value" is used as an indicator
+end=0
+value=0
 def getData(data):
-    for i in range(15):
+    while True:
         print(data.read())
         time.sleep(0.5)
+        end=machine.Pin(36,machine.Pin.IN)
+        if end==1:
+            value=1
+            break
+
+#indicator to show recording has stopped
+if value==1:
+    green.value(1)
+    red.value(0)
 
 #save data somewhere
