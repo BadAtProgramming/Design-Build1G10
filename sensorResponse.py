@@ -29,7 +29,7 @@ while True:
         blueLed.value(1)
         redLed.value(0)
 
-        while mea<=128:
+        while mea<=127:
             mainLed.duty(mea*8)
             time.sleep(0.1)
             while k<10:
