@@ -19,10 +19,8 @@ data.atten(ADC.ATTN_11DB)
 #data.width(ADC.WIDTH_11BIT)
 
 mainLed=machine.PWM(machine.Pin(13))
-mainLed.duty(0)
 mainLed.freq(78000)
-
-timer=0
+mea=0
 k=0
 r=0
 
@@ -31,21 +29,18 @@ while True:
         blueLed.value(1)
         redLed.value(0)
 
-        while True:
-            if button2.value()!=0:
-                redLed.value(1)
-                greenLed.value(0)
-                break
-            elif timer==100: #for sleep(0.01), 1 second interval -> timer=100
-                while k<10:
-                    r+=data.read
-                    k+=1
-                    time.sleep(0.001)
-                file.write(repr(r/10)+';')
-                timer=1
-            else:
-                timer+=1
-                time.sleep(0.01)
+        while mea<=128:
+            mainLed.duty(mea*8)
+            time.sleep(0.1)
+            while k<10:
+                r+=data.read()
+                k+=1
+                time.sleep(0.001)
+            r=r/10
+            file.write(repr(r)+';')
+            r=0
+            k=0
+            mea+=1
         break
 
 file.close()
