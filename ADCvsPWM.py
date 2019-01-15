@@ -25,6 +25,6 @@ def DataPlot():
     #plt.xticks(range(1,x+1))
     #plt.yticks(range(1,y+1))
     plt.show()
-DataPlot()    
+DataPlot()
 
 """ PWM rate is the freq that has a max of 255, starting from 0"""

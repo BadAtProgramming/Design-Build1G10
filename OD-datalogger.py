@@ -23,7 +23,6 @@ data.atten(ADC.ATTN_11DB)
 mainLed=machine.PWM(machine.Pin(13))
 mainLed.freq(78000)
 mainLed.duty(600)
-mea=0
 k=0
 r=0
 
@@ -34,12 +33,12 @@ while True:
         blueLed.value(1)
         redLed.value(0)
 
-        while k<10:
+        while k<100:
             r+=data.read()
             k+=1
             time.sleep(0.01)
-        r=r/10
-        file.write(repr(r)+ (';' if mea != 1023 else '')+'\n')
+        r=r/100
+        file.write(repr(r)+';'+'\n')
         r=0
         k=0
 
