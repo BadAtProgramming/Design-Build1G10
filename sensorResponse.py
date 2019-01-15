@@ -2,6 +2,7 @@ import machine
 import time
 from machine import ADC
 import utime
+import os
 
 redLed=machine.Pin(15,machine.Pin.OUT)
 blueLed=machine.Pin(27,machine.Pin.OUT)
@@ -29,15 +30,15 @@ while True:
         blueLed.value(1)
         redLed.value(0)
 
-        while mea<=127:
-            mainLed.duty(mea*8)
-            time.sleep(0.1)
+        while mea<=1023:
+            mainLed.duty(mea)
+            time.sleep(0.01)
             while k<10:
                 r+=data.read()
                 k+=1
                 time.sleep(0.001)
             r=r/10
-            file.write(repr(r)+';')
+            file.write(repr(r)+ (';' if mea != 1023 else ''))
             r=0
             k=0
             mea+=1
