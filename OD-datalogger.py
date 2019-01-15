@@ -22,7 +22,7 @@ data.atten(ADC.ATTN_11DB)
 
 mainLed=machine.PWM(machine.Pin(13))
 mainLed.freq(78000)
-mainLed.duty(800)
+mainLed.duty(600)
 mea=0
 k=0
 r=0

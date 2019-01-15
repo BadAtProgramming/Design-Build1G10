@@ -32,12 +32,11 @@ while True:
 
         while mea<=1023:
             mainLed.duty(mea)
-            time.sleep(0.01)
-            while k<10:
+            time.sleep(0.05)
+            while k<100:
                 r+=data.read()
                 k+=1
-                time.sleep(0.001)
-            r=r/10
+            r=r/100
             file.write(repr(r)+ (';' if mea != 1023 else ''))
             r=0
             k=0
