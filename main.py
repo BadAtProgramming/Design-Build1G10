@@ -1,7 +1,6 @@
 import machine
 import time
 from machine import ADC
-import utime
 import math
 
 redLed=machine.Pin(15,machine.Pin.OUT)
@@ -9,7 +8,6 @@ blueLed=machine.Pin(27,machine.Pin.OUT)
 greenLed=machine.Pin(33,machine.Pin.OUT)
 button1=machine.Pin(36,machine.Pin.IN)
 button2=machine.Pin(39,machine.Pin.IN)
-file=open('datafile.txt','w')
 
 #Turn on only blue LED
 redLed.value(1)
@@ -28,6 +26,7 @@ while True:
     if button1.value()!=0:
         blueLed.value(1)
         greenLed.value(0)
+        clock=time.time()
 
         while True:
             if button2.value()!=0:
@@ -35,7 +34,8 @@ while True:
                 greenLed.value(1)
                 break
 
-            elif timer==6000: #for sleep(0.01), 1 second interval -> timer=100
+            elif timer==100: #for sleep(0.01), 1 second interval -> timer=100
+                file=open('datafile.txt','a')
                 k=0
                 r=[]
                 acu=0
@@ -50,12 +50,18 @@ while True:
                 for el in r:
                     cal+=(float(el)-acu)**2
                 cal=math.sqrt(cal/100)
-                file.write(repr(acu) + ',' + repr(cal) + ';')
+                file.write(repr(time.time()-clock) + ',' + repr(acu) + ',' + repr(cal) + '\n')
+                file.close()
                 r.clear()
                 timer=10
+
             else:
                 timer+=1
                 time.sleep(0.01)
+    elif button2.value()!=0:
+        redLed.value(0)
+        blueLed.value(1)
+        greenLed.value(1)
         break
-
-file.close()
+    else:
+        time.sleep(0.1)
