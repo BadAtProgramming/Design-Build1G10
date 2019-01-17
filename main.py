@@ -20,7 +20,7 @@ mainLed=machine.PWM(machine.Pin(13))
 mainLed.freq(78000)
 mainLed.duty(600)
 
-timer=0
+timer=6000
 
 while True:
     if button1.value()!=0:
@@ -34,8 +34,7 @@ while True:
                 greenLed.value(1)
                 break
 
-            elif timer==100: #for sleep(0.01), 1 second interval -> timer=100
-                file=open('datafile.txt','a')
+            elif timer==6000: #for sleep(0.01), 1 second interval -> timer=100
                 k=0
                 r=[]
                 acu=0
@@ -50,6 +49,7 @@ while True:
                 for el in r:
                     cal+=(float(el)-acu)**2
                 cal=math.sqrt(cal/100)
+                file=open('datafile.txt','a')
                 file.write(repr(time.time()-clock) + ',' + repr(acu) + ',' + repr(cal) + '\n')
                 file.close()
                 r.clear()
