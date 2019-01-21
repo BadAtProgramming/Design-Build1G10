@@ -38,7 +38,8 @@ while True:
             k+=1
             time.sleep(0.01)
         r=r/100
-        file.write(repr(r)+';'+'\n')
+        file.write(repr(r)+'\n')
+        print(repr(r))
         r=0
         k=0
 
